@@ -1,0 +1,33 @@
+%{
+#include <stdio.h>
+int spaceCount = 0;
+int newlineCount = 0;
+%}
+
+%%
+
+[ \t]       { spaceCount++; }
+\n          { newlineCount++; }
+
+.           { /* ignore other characters */ }
+
+%%
+
+int yywrap()
+{
+return 1;
+}
+
+int main() {
+FILE *input;
+char file[50];
+printf("enter filename=");
+scanf("%s",file);
+input=fopen(file,"r");
+yyin=input;
+yylex();
+fclose(input);
+    printf("Number of Whitespaces: %d\n", spaceCount);
+    printf("Number of Newline Characters: %d\n", newlineCount);
+    return 0;
+}
