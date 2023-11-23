@@ -1,0 +1,27 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+
+[a-zA-Z]+   { printf("Word: %s\n", yytext); }
+[=<>]=?    { printf("Relational Operator: %s\n", yytext); }
+
+%%
+
+int yywrap()
+{
+return 1;
+}
+
+int main() {
+FILE *input;
+char file[100];
+printf("enter file name=");
+scanf("%s",file);
+input=fopen(file,"r");
+yyin=input;
+yylex();
+fclose(input);
+return 0;
+}
